@@ -132,6 +132,14 @@ pub struct Bytes<Len = BincodeLen>(PhantomData<Len>);
 /// A [`bytes::BytesMut`] with a customizable length encoding.
 pub struct BytesMut<Len = BincodeLen>(PhantomData<Len>);
 
+#[cfg(feature = "bytes")]
+/// A [`bytes::Bytes`] with a customizable length encoding.
+pub struct Bytes<Len = BincodeLen>(PhantomData<Len>);
+
+#[cfg(feature = "bytes")]
+/// A [`bytes::BytesMut`] with a customizable length encoding.
+pub struct BytesMut<Len = BincodeLen>(PhantomData<Len>);
+
 /// Indicates that the type is an element of a sequence, composable with [`containers`](self).
 ///
 /// Prefer [`Pod`] for types representable as raw bytes.
