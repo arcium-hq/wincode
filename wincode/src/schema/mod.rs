@@ -2769,6 +2769,32 @@ mod tests {
     }
 
     #[test]
+    fn test_custom_preallocation_size_limit() {
+        let c = Configuration::default().with_preallocation_size_limit::<64>();
+        proptest!(proptest_cfg(), |(value in proptest::collection::vec(any::<u8>(), 0..=128))| {
+            let wincode_serialized = config::serialize(&value, c).unwrap();
+            let wincode_deserialized: Result<Vec<u8>, _> = config::deserialize(&wincode_serialized, c);
+            if value.len() <= 64 {
+                prop_assert_eq!(value, wincode_deserialized.unwrap());
+            } else {
+                prop_assert!(wincode_deserialized.is_err());
+            }
+        });
+    }
+
+    #[test]
+    fn test_custom_length_encoding() {
+        let c = Configuration::default().with_length_encoding::<FixInt<u32>>();
+        proptest!(proptest_cfg(), |(value: Vec<u8>)| {
+            let wincode_serialized = config::serialize(&value, c).unwrap();
+            let wincode_deserialized: Vec<u8> = config::deserialize(&wincode_serialized, c).unwrap();
+            let len = value.len();
+            prop_assert_eq!(len, u32::from_le_bytes(wincode_serialized[0..4].try_into().unwrap()) as usize);
+            prop_assert_eq!(value, wincode_deserialized);
+        });
+    }
+
+    #[test]
     #[cfg(feature = "bytes")]
     fn test_bytes_roundtrip() {
         proptest!(proptest_cfg(), |(data in proptest::collection::vec(any::<u8>(), 0..1000).prop_map(bytes::Bytes::from))| {
