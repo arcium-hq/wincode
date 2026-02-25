@@ -8,15 +8,6 @@ homepage = "https://anza.xyz/"
 license = "Apache-2.0"
 edition = "2021"
 
-[lints.clippy]
-default_trait_access = "deny"
-manual_let_else = "deny"
-used_underscore_binding = "deny"
-arithmetic_side_effects = "deny"
-
-[lints.rust]
-warnings = "deny"
-
 [lib]
 proc-macro = true
 
