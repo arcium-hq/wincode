@@ -1,17 +1,23 @@
 [package]
 name = "wincode"
 version = "0.2.5"
-authors.workspace = true
+authors = ["Anza Maintainers <maintainers@anza.xyz>"]
 description = "Fast bincode de/serialization with placement initialization"
-repository.workspace = true
-homepage.workspace = true
-license.workspace = true
-edition.workspace = true
+repository = "https://github.com/anza-xyz/wincode"
+homepage = "https://anza.xyz/"
+license = "Apache-2.0"
+edition = "2021"
 categories = ["encoding", "network-programming"]
 keywords = ["binary", "encode", "serialize", "deserialize", "bincode"]
 
-[lints]
-workspace = true
+[lints.clippy]
+default_trait_access = "deny"
+manual_let_else = "deny"
+used_underscore_binding = "deny"
+arithmetic_side_effects = "deny"
+
+[lints.rust]
+warnings = "deny"
 
 [package.metadata.docs.rs]
 all-features = true
@@ -42,8 +48,8 @@ solana-short-vec = { version = "3.0.0" }
 criterion = { version = "0.8.1", features = ["html_reports"] }
 
 [build-dependencies]
-proc-macro2.workspace = true
-quote.workspace = true
+proc-macro2 = "1.0.101"
+quote = "1.0.41"
 
 [[bench]]
 name = "benchmarks"
