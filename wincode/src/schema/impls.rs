@@ -359,12 +359,12 @@ where
 
     #[inline]
     fn size_of(value: &Self::Src) -> WriteResult<usize> {
-        <containers::Vec<T, BincodeLen<{ 2 << 25 }>>>::size_of(value)
+        <containers::Vec<T, BincodeLen<{ 1 << 27 }>>>::size_of(value)
     }
 
     #[inline]
     fn write(writer: &mut impl Writer, value: &Self::Src) -> WriteResult<()> {
-        <containers::Vec<T, BincodeLen<{ 2 << 25 }>>>::write(writer, value)
+        <containers::Vec<T, BincodeLen<{ 1 << 27 }>>>::write(writer, value)
     }
 }
 
@@ -377,7 +377,7 @@ where
 
     #[inline]
     fn read(reader: &mut impl Reader<'de>, dst: &mut MaybeUninit<Self::Dst>) -> ReadResult<()> {
-        <containers::Vec<T, BincodeLen<{ 2 << 25 }>>>::read(reader, dst)
+        <containers::Vec<T, BincodeLen<{ 1 << 27 }>>>::read(reader, dst)
     }
 }
 
